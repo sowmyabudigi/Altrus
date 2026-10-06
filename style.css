@@ -1,0 +1,1637 @@
+/* =====================================================
+   Workspace Dashboard — responsive + enhanced
+   HTML untouched.
+   Changes in this version:
+   1. Page scrollbar removed (scrolling still works, bar is invisible)
+   2. Footer made fully responsive on all devices
+   Build order:
+   0 Base → 1 Header → 2 Footer → 3 Left Nav → 4 Content → 5 Notification → 6 Responsive → 7 Extras
+   ===================================================== */
+
+
+/* ---------- 0. BASE ---------- */
+:root {
+  --page: #F1F3FA;
+  --card: #fff;
+  --ink: #0F1117;
+  --text: #1F2430;
+  --muted: #5F6675;
+  --line: #E6E9EF;
+  --field: #D6DAE3;
+  --primary: #4F46E5;
+  --accent: #8B5CF6;
+  --primary-soft: #E0E7FF;
+  --dark: #161A33;
+  --green: #1E8A4C;
+  --red: #C0392B;
+  --sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --serif: 'Gelasio', Georgia, serif;
+
+  /* layout tokens */
+  --header-h: 64px;
+  --sidebar-w: 195px;
+  --nav-space: var(--sidebar-w);
+  --content-max: 1280px;
+  --gutter: clamp(16px, 2.6vw, 32px);
+
+  /* elevation */
+  --shadow-sm: 0 1px 3px rgba(16, 24, 40, .06);
+  --shadow-md: 0 8px 24px rgba(16, 24, 40, .10);
+
+  /* notification settings */
+  --notif-count: "3";
+  --notif-red: #E5484D;
+
+  color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background:
+    radial-gradient(900px 420px at 90% -80px, #DDE3FF 0%, transparent 70%),
+    radial-gradient(700px 360px at -5% 30%, #DDF4EF 0%, transparent 65%),
+    var(--page);
+  background-attachment: fixed;
+  color: var(--text);
+  font: 15px/1.45 var(--sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+img {
+  max-width: 100%;
+}
+
+svg.lucide {
+  width: 18px;
+  height: 18px;
+  flex: none;
+  stroke-width: 1.75;
+}
+
+::selection {
+  background: #E0E7FF;
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 3px solid #6366F1;
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+
+/* ---------- 1. HEADER ---------- */
+body > header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: var(--header-h);
+  padding: 0 var(--gutter) 0 21px;
+  background: rgba(255, 255, 255, .88);
+  -webkit-backdrop-filter: saturate(160%) blur(12px);
+  backdrop-filter: saturate(160%) blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+
+body > header > div:first-child {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: none;
+  width: calc(var(--sidebar-w) + 8px);
+}
+
+body > header > div:first-child span:first-child {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 7px;
+  background: linear-gradient(135deg, #4F46E5, #8B5CF6);
+  color: #fff;
+  font: 700 15px var(--serif);
+  box-shadow: 0 4px 10px rgba(79, 70, 229, .35);
+}
+
+body > header > div:first-child span:last-child {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--dark);
+  letter-spacing: -.01em;
+  white-space: nowrap;
+}
+
+body > header form {
+  flex: 1;
+  min-width: 0;
+  max-width: 420px;
+}
+
+body > header input[type=search] {
+  width: 100%;
+  height: 40px;
+  padding: 0 15px 0 40px;
+  border: 1px solid var(--field);
+  border-radius: 10px;
+  background:
+    #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' fill='none' stroke='%236B7280' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round' viewBox='0 0 24 24'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.5-3.5'/%3E%3C/svg%3E")
+    13px center no-repeat;
+  font-size: 15px;
+  transition: border-color .15s, box-shadow .15s;
+}
+
+body > header input[type=search]::placeholder {
+  color: #6B7280;
+}
+
+body > header input[type=search]:focus {
+  outline: none;
+  border-color: #6366F1;
+  box-shadow: 0 0 0 3px #E0E7FF;
+}
+
+body > header > div:last-child {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 2vw, 28px);
+}
+
+body > header button {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--text);
+  transition: background .15s, transform .15s;
+}
+
+body > header button:hover {
+  background: #F0F2F6;
+}
+
+body > header button:active {
+  transform: scale(.94);
+}
+
+body > header button svg {
+  width: 20px;
+  height: 20px;
+}
+
+body > header img {
+  position: relative;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #E0E7FF, #C7D2FE);
+  object-fit: cover;
+  font-size: 0;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 3px #C7D2FE;
+}
+
+body > header img::after {
+  content: "RW";
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font: 600 14px var(--sans);
+  color: #3730A3;
+}
+
+
+/* ---------- 2. FOOTER (fixed row at the bottom, fully responsive on every device) ---------- */
+body > footer {
+  position: relative;
+  z-index: 45;
+  flex: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px 24px;
+  min-height: 44px;
+  padding: 8px var(--gutter) calc(8px + env(safe-area-inset-bottom, 0px)) 21px;
+  background: var(--card);
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+  line-height: 1.4;
+  color: #4B5563;
+}
+
+body > footer > * {
+  min-width: 0;
+}
+
+/* brand / copyright side */
+body > footer > div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+body > footer > div span:first-child {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #4F46E5, #8B5CF6);
+  color: #fff;
+  font: 700 10px var(--serif);
+}
+
+/* links side */
+body > footer nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 4px clamp(14px, 2vw, 22px);
+}
+
+body > footer nav a {
+  padding: 2px 0;
+  color: var(--text);
+  transition: color .15s;
+}
+
+body > footer nav a:hover {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+
+/* ---------- 3. LEFT NAV (middle row: sidebar + content) ---------- */
+body > div {
+  flex: 1;
+  display: flex;
+  align-items: stretch;
+  min-height: 0;
+  overflow: hidden;
+}
+
+body > div > nav {
+  overflow-y: auto;
+
+  /* CHANGE 1: no visible scrollbar here either — scrolling still works */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  display: flex;
+  flex-direction: column;
+  flex: none;
+  width: var(--sidebar-w);
+  padding: 8px 9px 15px;
+  background: var(--card);
+  border-right: 1px solid var(--line);
+}
+
+/* CHANGE 1: hide the scrollbar in WebKit/Blink browsers too */
+body > div > nav::-webkit-scrollbar {
+  display: none;
+}
+
+body > div > nav > button:first-child {
+  align-self: flex-end;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  margin-right: 7px;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  color: #4B5563;
+  transition: background .15s;
+}
+
+body > div > nav > button:first-child:hover {
+  background: #F0F2F6;
+}
+
+body > div > nav ul {
+  display: grid;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+body > div > nav li button,
+body > div > nav > button:last-child {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  height: 38px;
+  padding: 0 14px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: none;
+  color: var(--dark);
+  font-size: 15px;
+  font-weight: 500;
+  text-align: left;
+  transition: background .15s, border-color .15s, transform .15s;
+}
+
+body > div > nav li button:hover,
+body > div > nav > button:last-child:hover {
+  background: #F3F4F8;
+}
+
+body > div > nav li button:active,
+body > div > nav > button:last-child:active {
+  transform: scale(.98);
+}
+
+body > div > nav li:first-child button {
+  background: #EEF2FF;
+  border-color: #C7D2FE;
+  color: #3730A3;
+  font-weight: 600;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, .06), inset 3px 0 0 var(--primary);
+}
+
+body > div > nav > button:last-child {
+  margin-top: auto;
+}
+
+
+/* ---------- 4. RIGHT CONTENT ---------- */
+main {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
+
+  /* CHANGE 1: page scrollbar hidden — mouse wheel / trackpad / touch scrolling still works */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  /* content stays centered at max width */
+  padding-block: clamp(20px, 2.4vw, 32px) 48px;
+  padding-inline: max(var(--gutter), calc((100vw - var(--nav-space) - var(--content-max)) / 2 + var(--gutter)));
+  display: flex;
+  flex-direction: column;
+  gap: clamp(18px, 2vw, 26px);
+
+  /* lets children react to the width of main (not the screen) */
+  container: main / inline-size;
+}
+
+/* CHANGE 1: hide the page scrollbar in WebKit/Blink browsers too */
+main::-webkit-scrollbar {
+  display: none;
+}
+
+/* breadcrumb */
+main > nav {
+  margin-bottom: -6px;
+}
+
+main > nav ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  font-size: 13px;
+  color: #6B7280;
+}
+
+main > nav li + li::before {
+  content: "›";
+  margin-right: 10px;
+  color: #9AA1B0;
+}
+
+main > nav li:last-child {
+  font-weight: 600;
+  color: var(--dark);
+}
+
+main > nav a:hover {
+  color: var(--dark);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* page heading row (title left, "New review" button right) */
+main > div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px 24px;
+  margin-bottom: -2px;
+}
+
+main > div > div {
+  flex: 1 1 360px;
+  min-width: 0;
+}
+
+h1 {
+  font: 700 clamp(26px, 2.4vw + 14px, 34px)/1.15 var(--sans);
+  letter-spacing: -.025em;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+main > div p {
+  max-width: 560px;
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--muted);
+  text-wrap: pretty;
+}
+
+main > div > button {
+  position: relative;
+  overflow: hidden;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 24px;
+  border: 0;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--accent), var(--primary));
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, .35);
+  transition: filter .15s, transform .15s, box-shadow .15s;
+}
+
+main > div > button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, .45) 50%, transparent 70%);
+  transform: translateX(-120%);
+  transition: transform .6s ease;
+}
+
+main > div > button:hover {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(79, 70, 229, .42);
+}
+
+main > div > button:hover::after {
+  transform: translateX(120%);
+}
+
+main > div > button:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 8px rgba(79, 70, 229, .3);
+}
+
+main > div > button svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* ----- 4 stat cards: identical structure, identical alignment ----- */
+main > ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(10px, 1.4vw, 16px);
+}
+
+main > ul li {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  min-width: 0;
+  height: 100%;
+  padding: 20px 20px 18px;
+  background: linear-gradient(180deg, #fff 0%, #FBFBFD 100%);
+  border: 1px solid #E9ECF2;
+  border-radius: 16px;
+  box-shadow: var(--shadow-sm);
+  font-size: 13px;
+  line-height: 1.45;
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+
+/* colored accent line on top of each card */
+main > ul li::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+}
+
+main > ul li:nth-child(2)::before {
+  background: linear-gradient(90deg, #C0392B, #E8837A);
+}
+
+main > ul li:nth-child(3)::before {
+  background: linear-gradient(90deg, #0EA5E9, #7DD3FC);
+}
+
+main > ul li:nth-child(4)::before {
+  background: linear-gradient(90deg, #1E8A4C, #6FD09A);
+}
+
+main > ul li:hover {
+  transform: translateY(-3px);
+  border-color: #DDE1EA;
+  box-shadow: var(--shadow-md);
+}
+
+/* row 1: label */
+main > ul li p:first-child {
+  width: 100%;
+  overflow: hidden;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--muted);
+}
+
+/* row 2: big number (+ delta if it lives here) */
+main > ul li p:nth-child(2) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 8px;
+  font: 700 clamp(28px, 3.4cqi, 36px)/1.1 var(--sans);
+  letter-spacing: -.025em;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+/* row 3: delta + caption, always pinned to the bottom of the card */
+main > ul li p:last-child {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  margin-top: auto;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+/* delta pill */
+main > ul li span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 99px;
+  background: color-mix(in srgb, currentColor 12%, transparent);
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums;
+  color: var(--green);
+}
+
+main > ul li span::before {
+  content: "▲";
+  font-size: 9px;
+}
+
+main > ul li:nth-child(2) span {
+  color: var(--red);
+}
+
+main > ul li:nth-child(2) span::before {
+  content: "▼";
+}
+
+/* ----- section cards ----- */
+main > section {
+  background: var(--card);
+  border: 1px solid #E9ECF2;
+  border-radius: 16px;
+  box-shadow: var(--shadow-sm);
+  padding: clamp(18px, 2vw, 26px) clamp(16px, 2.2vw, 28px) clamp(20px, 2.2vw, 28px);
+}
+
+h2 {
+  font: 600 17px/1.3 var(--sans);
+  color: var(--ink);
+}
+
+main > section > h2 {
+  margin-bottom: 16px;
+}
+
+main > section > h2 + p {
+  margin: -10px 0 18px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+/* ----- forms ----- */
+main > section form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 16px 20px;
+}
+
+form label {
+  flex: 0 1 calc(50% - 10px);
+  min-width: min(100%, 220px);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-content: start;
+  row-gap: 7px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+form label > input,
+form label > select,
+form label > textarea {
+  grid-column: 1 / -1;
+  grid-row: 2;
+}
+
+form label:has(:required)::after {
+  content: "*";
+  grid-row: 1;
+  grid-column: 2;
+  margin-left: 4px;
+  color: #C2362B;
+}
+
+input[type=text],
+input[type=date],
+select,
+textarea {
+  width: 100%;
+  height: 42px;
+  padding: 0 13px;
+  border: 1px solid var(--field);
+  border-radius: 9px;
+  background: #fff;
+  font-size: 14px;
+  font-weight: 400;
+  transition: border-color .15s, box-shadow .15s, background-color .15s;
+}
+
+input[type=text]:hover,
+input[type=date]:hover,
+select:hover,
+textarea:hover {
+  border-color: #BFC5D2;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #7A8191;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #6366F1;
+  box-shadow: 0 0 0 3px #E0E7FF;
+}
+
+select {
+  appearance: none;
+  padding-right: 38px;
+  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%235F6675' stroke-width='2' stroke-linecap='round' viewBox='0 0 24 24'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") right 12px center no-repeat;
+}
+
+textarea {
+  height: 110px;
+  padding: 12px 13px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+/* only the notes/textarea field spans the whole row */
+form label:has(textarea) {
+  flex-basis: 100%;
+}
+
+/* date inputs: consistent height and alignment on every browser */
+input[type=date] {
+  display: block;
+  min-width: 0;
+  min-height: 42px;
+  -webkit-appearance: none;
+  appearance: none;
+  line-height: 1.2;
+}
+
+input[type=date]::-webkit-date-and-time-value {
+  text-align: left;
+}
+
+input[type=date]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: .6;
+  transition: opacity .15s;
+}
+
+input[type=date]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
+/* ----- filter reviews (section 1): strict grid, every field and button on the same lines ----- */
+main > section:nth-of-type(1) form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  align-items: start;
+  gap: 16px;
+}
+
+/* each field = fixed label row + fixed input row, so tops and bottoms always match */
+main > section:nth-of-type(1) form label {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: 20px 42px;
+  row-gap: 7px;
+  width: 100%;
+  min-width: 0;
+  line-height: 20px;
+  white-space: nowrap;
+}
+
+main > section:nth-of-type(1) form label > input,
+main > section:nth-of-type(1) form label > select {
+  height: 42px;
+  min-width: 0;
+}
+
+/* buttons sit on the same line as the inputs (20px label + 7px gap above them) */
+main > section:nth-of-type(1) form button {
+  align-self: start;
+  width: 100%;
+  height: 42px;
+  margin-top: 27px;
+}
+
+/* ----- new intake (section 3): breathing room above the action buttons ----- */
+main > section:nth-of-type(3) form button {
+  margin-top: 4px;
+}
+
+form button {
+  height: 38px;
+  padding: 0 16px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background .15s, border-color .15s, transform .1s, box-shadow .15s;
+}
+
+form button:active {
+  transform: translateY(1px);
+}
+
+form button[type=submit] {
+  background: linear-gradient(180deg, #252B57, var(--dark));
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(18, 20, 26, .25);
+}
+
+form button[type=submit]:hover {
+  background: #2B3166;
+  box-shadow: 0 4px 12px rgba(22, 26, 51, .3);
+}
+
+form button[type=reset] {
+  background: none;
+  color: var(--dark);
+}
+
+form button[type=reset]:hover {
+  background: #F0F2F6;
+}
+
+form button[type=button] {
+  background: #fff;
+  border-color: var(--field);
+  color: var(--dark);
+}
+
+form button[type=button]:hover {
+  background: #F6F7FA;
+}
+
+/* ----- recent reviews table ----- */
+main > section:nth-of-type(2) {
+  padding: 20px 0 6px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #C9CFDB transparent;
+}
+
+main > section:nth-of-type(2) > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 18px 14px;
+}
+
+main > section:nth-of-type(2) > div span {
+  padding: 3px 11px;
+  border: 1px solid #DFE3EA;
+  border-radius: 8px;
+  background: #F5F6F9;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: #4B5563;
+  white-space: nowrap;
+}
+
+table,
+thead,
+tbody {
+  display: block;
+}
+
+table {
+  min-width: 620px;
+}
+
+tr {
+  display: grid;
+  grid-template-columns: minmax(0, 1.9fr) minmax(0, 1.1fr) minmax(0, 1fr) minmax(0, 1.2fr) minmax(0, .9fr);
+  column-gap: 12px;
+  align-items: center;
+  padding: 0 18px;
+}
+
+thead tr {
+  background: #FAFBFC;
+  border-top: 1px solid var(--line);
+}
+
+th {
+  padding: 13px 0;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  text-align: left;
+  color: var(--muted);
+}
+
+tbody tr {
+  border-top: 1px solid var(--line);
+  transition: background .12s;
+}
+
+tbody tr:hover {
+  background: #F7F8FB;
+}
+
+td {
+  padding: 11px 0;
+  font-size: 14px;
+  line-height: 1.3;
+  color: #3B4252;
+  overflow-wrap: anywhere;
+}
+
+td:first-child {
+  padding-right: 8px;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+td:last-child {
+  color: #4B5563;
+}
+
+/* status pill */
+tbody td:nth-child(4) {
+  justify-self: start;
+  padding: 3px 11px;
+  border-radius: 99px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+tbody td:nth-child(4)::before {
+  content: "";
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  vertical-align: middle;
+}
+
+tbody tr:nth-child(1) td:nth-child(4),
+tbody tr:nth-child(6) td:nth-child(4) {
+  background: #FDEBD9;
+  color: #B25C12;
+}
+
+tbody tr:nth-child(2) td:nth-child(4),
+tbody tr:nth-child(3) td:nth-child(4),
+tbody tr:nth-child(7) td:nth-child(4) {
+  background: #DCEFF7;
+  color: #1E6E8E;
+}
+
+tbody tr:nth-child(4) td:nth-child(4),
+tbody tr:nth-child(8) td:nth-child(4) {
+  background: #DDF3E6;
+  color: #1F7A4C;
+}
+
+tbody tr:nth-child(5) td:nth-child(4) {
+  background: #DDF1EC;
+  color: #2A6F63;
+}
+
+
+/* ---------- 5. NOTIFICATION BADGE (CSS only) ---------- */
+/* matches aria-label / title containing "notif" */
+
+/* anchor for badge + tooltip */
+body > header :is(button[aria-label*="notif" i], button[title*="notif" i]) {
+  position: relative;
+  z-index: 60;
+  overflow: visible;
+}
+
+/* fallback bell: shows only if the icon <svg> did not render */
+body > header :is(button[aria-label*="notif" i], button[title*="notif" i]):not(:has(svg)) {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%231F2430' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9'/%3E%3Cpath d='M10.3 21a1.94 1.94 0 0 0 3.4 0'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px 20px;
+}
+
+/* count pill */
+body > header :is(button[aria-label*="notif" i], button[title*="notif" i])::after {
+  content: var(--notif-count);
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 17px;
+  height: 17px;
+  padding: 0 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 99px;
+  background: var(--notif-red);
+  color: #fff;
+  font-size: 10.5px;
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  box-shadow: 0 0 0 2px var(--card);
+  pointer-events: none;
+  transition: transform .15s ease;
+  animation:
+    badge-in .5s cubic-bezier(.3, 1.6, .5, 1),
+    badge-ripple 2.6s ease-out .6s infinite;
+}
+
+body > header :is(button[aria-label*="notif" i], button[title*="notif" i]):hover::after,
+body > header :is(button[aria-label*="notif" i], button[title*="notif" i]):focus-visible::after {
+  transform: scale(1.15);
+}
+
+body > header :is(button[aria-label*="notif" i], button[title*="notif" i]):active::after {
+  transform: scale(.9);
+}
+
+/* tooltip */
+body > header :is(button[aria-label*="notif" i], button[title*="notif" i])::before {
+  content: var(--notif-count) " unread notifications";
+  position: absolute;
+  top: calc(100% + 9px);
+  right: -4px;
+  padding: 7px 12px;
+  border-radius: 8px;
+  background: #15171C;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  box-shadow: 0 8px 22px rgba(16, 24, 40, .22);
+  opacity: 0;
+  transform: translateY(-5px) scale(.96);
+  transform-origin: top right;
+  pointer-events: none;
+  transition: opacity .16s ease, transform .16s ease;
+}
+
+body > header :is(button[aria-label*="notif" i], button[title*="notif" i]):hover::before,
+body > header :is(button[aria-label*="notif" i], button[title*="notif" i]):focus-visible::before {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+@keyframes badge-in {
+  from {
+    transform: scale(0);
+  }
+  60% {
+    transform: scale(1.3);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes badge-ripple {
+  0% {
+    box-shadow: 0 0 0 2px var(--card), 0 0 0 0 rgba(229, 72, 77, .55);
+  }
+  70%,
+  100% {
+    box-shadow: 0 0 0 2px var(--card), 0 0 0 9px rgba(229, 72, 77, 0);
+  }
+}
+
+
+/* ---------- 6. RESPONSIVE ---------- */
+
+/* ----- container queries: react to the width of <main> itself ----- */
+
+/* stat cards: 2 columns by default, 4 in one row when there is room */
+@container main (min-width: 760px) {
+  main > ul {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* very narrow content area: tighter cards */
+@container main (max-width: 420px) {
+  main > ul li {
+    padding: 16px 14px 14px;
+  }
+
+  main > ul li p:first-child {
+    letter-spacing: .06em;
+  }
+}
+
+/* laptop and wider: all filter fields + buttons in ONE line */
+@container main (min-width: 900px) {
+  main > section:nth-of-type(1) form {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  main > section:nth-of-type(1) form label {
+    flex: 1 1 0;
+    width: auto;
+    min-width: 110px;
+  }
+
+  main > section:nth-of-type(1) form button {
+    flex: none;
+    width: auto;
+    min-width: 96px;
+    padding: 0 18px;
+  }
+}
+
+/* ----- large desktops / TVs ----- */
+@media (min-width: 1700px) {
+  :root {
+    --content-max: 1440px;
+    --sidebar-w: 215px;
+  }
+
+  body {
+    font-size: 16px;
+  }
+
+  body > footer {
+    min-height: 48px;
+    font-size: 14px;
+  }
+}
+
+/* ----- laptops / small desktops ----- */
+@media (max-width: 1100px) {
+  :root {
+    --sidebar-w: 180px;
+  }
+}
+
+/* ----- phones ----- */
+@media (max-width: 700px) {
+  :root {
+    --header-h: 58px;
+  }
+
+  body > header {
+    gap: 10px;
+    padding: 0 14px;
+  }
+
+  body > header > div:first-child span:last-child {
+    display: none;
+  }
+
+  body > header form {
+    max-width: none;
+  }
+
+  body > header img {
+    width: 36px;
+    height: 36px;
+  }
+
+  body > header :is(button[aria-label*="notif" i], button[title*="notif" i])::after {
+    top: -3px;
+    right: -3px;
+    min-width: 16px;
+    height: 16px;
+    font-size: 10px;
+  }
+
+  body > header :is(button[aria-label*="notif" i], button[title*="notif" i])::before {
+    right: 0;
+    padding: 6px 10px;
+    font-size: 11.5px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* heading row stacks: title, then full-width button */
+  main > div > div {
+    flex-basis: 100%;
+  }
+
+  main > div > button {
+    width: 100%;
+  }
+
+  /* form actions share the row evenly */
+  form button {
+    flex: 1 1 110px;
+  }
+
+  main > section:nth-of-type(2) > div {
+    padding: 0 14px 12px;
+  }
+
+  tr {
+    padding: 0 14px;
+  }
+}
+
+/* very small phones: hide the secondary header icons, keep search + bell + avatar */
+@media (max-width: 360px) {
+  body > header > div:last-child {
+    gap: 8px;
+  }
+
+  main > ul {
+    gap: 8px;
+  }
+}
+
+/* short landscape screens: keep the header compact */
+@media (max-height: 480px) and (orientation: landscape) {
+  :root {
+    --header-h: 52px;
+  }
+
+  body > footer {
+    min-height: 34px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+}
+
+
+/* ---------- TABLET + MOBILE: left-to-right slide-in menu (1024px and below) ---------- */
+@media (max-width: 1024px) {
+  :root {
+    --drawer-w: min(280px, 84vw);
+    --nav-space: 0px;
+  }
+
+  /* leave room in the header for the 3-line button */
+  body > header {
+    padding-left: 66px;
+  }
+
+  /* footer lines up with the page content */
+  body > footer {
+    padding-left: var(--gutter);
+    gap: 6px 18px;
+  }
+
+  body > header > div:first-child {
+    width: auto;
+    margin-right: 8px;
+  }
+
+  /* the sidebar becomes a drawer parked off-screen on the left */
+  body > div > nav {
+    position: fixed;
+    top: var(--header-h);
+    bottom: 0;
+    height: auto;
+    align-self: auto;
+    left: calc(var(--drawer-w) * -1 - 24px);
+    z-index: 60;
+    width: var(--drawer-w);
+    padding: 14px 12px 16px;
+    overflow-y: auto;
+    visibility: hidden;
+    border-right: 1px solid var(--line);
+    box-shadow: none;
+    transition:
+      left .3s cubic-bezier(.2, .8, .2, 1),
+      box-shadow .3s ease,
+      visibility 0s linear .3s;
+  }
+
+  /* open: slides in from the left */
+  body > div > nav.is-open,
+  html:not(.js) body > div > nav:focus-within {
+    left: 0;
+    visibility: visible;
+    box-shadow: 12px 0 40px rgba(16, 24, 40, .18);
+    transition:
+      left .3s cubic-bezier(.2, .8, .2, 1),
+      box-shadow .3s ease,
+      visibility 0s;
+  }
+
+  /* dim the page behind the open drawer */
+  body > div > nav.is-open::before,
+  html:not(.js) body > div > nav:focus-within::before {
+    content: "";
+    position: fixed;
+    top: var(--header-h);
+    right: 0;
+    bottom: 0;
+    left: var(--drawer-w);
+    z-index: -1;
+    background: rgba(15, 17, 23, .45);
+    animation: fade-in .25s ease both;
+  }
+
+  /* the first nav button becomes the 3-line button, pinned inside the header */
+  body > div > nav > button:first-child {
+    position: fixed;
+    top: calc((var(--header-h) - 42px) / 2);
+    left: 12px;
+    z-index: 70;
+    visibility: visible;
+    display: grid;
+    place-items: center;
+    align-self: auto;
+    width: 42px;
+    height: 42px;
+    margin: 0;
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: #fff;
+    font-size: 0;
+    color: var(--dark);
+  }
+
+  body > div > nav > button:first-child > * {
+    display: none;
+  }
+
+  /* 3 lines: one real line + two shadows, so they can morph into an X */
+  body > div > nav > button:first-child {
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    transition: background .2s, color .2s, border-color .2s;
+  }
+
+  body > div > nav > button:first-child::before {
+    content: "";
+    width: 20px;
+    height: 2px;
+    border-radius: 2px;
+    background: currentColor;
+    box-shadow: 0 -6px 0 currentColor, 0 6px 0 currentColor;
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+
+  body > div > nav > button:first-child::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 20px;
+    height: 2px;
+    margin: auto;
+    border-radius: 2px;
+    background: currentColor;
+    opacity: 0;
+    transition: transform .25s ease, opacity .25s ease;
+  }
+
+  /* open: dark button with a clear white X; tap it again to get the 3 lines back */
+  body > div > nav.is-open > button:first-child,
+  html:not(.js) body > div > nav:focus-within > button:first-child {
+    border-color: var(--dark);
+    background: var(--dark);
+    color: #fff;
+  }
+
+  body > div > nav.is-open > button:first-child::before,
+  html:not(.js) body > div > nav:focus-within > button:first-child::before {
+    transform: rotate(45deg);
+    box-shadow: 0 0 0 currentColor, 0 0 0 currentColor;
+  }
+
+  body > div > nav.is-open > button:first-child::after,
+  html:not(.js) body > div > nav:focus-within > button:first-child::after {
+    opacity: 1;
+    transform: rotate(-45deg);
+  }
+
+  /* menu items: full labels */
+  body > div > nav ul {
+    display: grid;
+    gap: 4px;
+    margin-top: 0;
+  }
+
+  body > div > nav li button,
+  body > div > nav > button:last-child {
+    justify-content: flex-start;
+    gap: 12px;
+    width: 100%;
+    height: 46px;
+    padding: 0 14px;
+    font-size: 15px;
+  }
+
+  body > div > nav > button:last-child {
+    margin-top: auto;
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+
+/* ---------- CHANGE 2: footer — stacks and centers cleanly on tablets and phones ---------- */
+@media (max-width: 880px) {
+  body > footer {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    min-height: 0;
+    padding: 10px var(--gutter) calc(10px + env(safe-area-inset-bottom, 0px));
+    font-size: 12.5px;
+    text-align: center;
+  }
+
+  body > footer > div {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  body > footer nav {
+    justify-content: center;
+    width: 100%;
+    gap: 4px 14px;
+  }
+}
+
+
+/* very small phones: even tighter footer */
+@media (max-width: 360px) {
+  body > footer {
+    font-size: 11.5px;
+  }
+
+  body > footer nav {
+    gap: 2px 10px;
+  }
+}
+
+/* ---------- 7. EXTRAS (polish) ---------- */
+
+/* entrance animation: sections fade up one after another */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+main > * {
+  flex-shrink: 0;
+  animation: rise .5s cubic-bezier(.2, .7, .2, 1) both;
+}
+
+main > *:nth-child(2) {
+  animation-delay: .05s;
+}
+
+main > *:nth-child(3) {
+  animation-delay: .1s;
+}
+
+main > *:nth-child(4) {
+  animation-delay: .15s;
+}
+
+main > *:nth-child(5) {
+  animation-delay: .2s;
+}
+
+main > *:nth-child(6) {
+  animation-delay: .25s;
+}
+
+/* slim, modern scrollbars (only for inner areas like the table, NOT the page) */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #C9CFDB transparent;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #C9CFDB;
+  border: 2px solid transparent;
+  border-radius: 99px;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #AEB5C4;
+  background-clip: content-box;
+}
+
+/* CHANGE 1 (re-asserted): the page itself never shows a scrollbar */
+main,
+body > div > nav {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+main::-webkit-scrollbar,
+body > div > nav::-webkit-scrollbar {
+  display: none;
+}
+
+/* no hover lift on touch devices */
+@media (hover: none) {
+  main > ul li:hover {
+    transform: none;
+    box-shadow: var(--shadow-sm);
+  }
+
+  main > div > button:hover {
+    transform: none;
+  }
+}
+
+/* respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* print: content only */
+@media print {
+  body {
+    height: auto;
+    overflow: visible;
+    background: #fff;
+  }
+
+  body > div {
+    overflow: visible;
+  }
+
+  body > header,
+  body > footer,
+  body > div > nav {
+    display: none;
+  }
+
+  main {
+    max-width: none;
+    padding: 0;
+    overflow: visible;
+  }
+
+  main > * {
+    animation: none;
+  }
+
+  main > section,
+  main > ul li {
+    box-shadow: none;
+    break-inside: avoid;
+  }
+}
