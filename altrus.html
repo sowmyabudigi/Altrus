@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Workspace Dashboard — Design Challenge</title>
+
+  <!-- Required by this design: Inter (UI text) + Gelasio (serif headings) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Gelasio:ital,wgh… rel="stylesheet">
+
+  <!-- Required by this design: Lucide icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+  <div>
+  <span>Ab</span>
+  <span>Workspace</span>
+  </div>
+  <form role="search">
+  <input type="search" placeholder="Search records, sources, experts…">
+  </form>
+  <div>
+  <button aria-label="Notifications">
+    <i data-lucide="bell"></i>
+  </button>
+  <img src="" alt="Rae Whitfield">
+  </div>
+  </header>
+
+  <div>
+  <nav>
+  <button aria-label="Toggle navigation">
+    <i data-lucide="panel-left-close"></i>
+  </button>
+  <ul>
+    <li><button><i data-lucide="layout-dashboard"></i>Dashboard</button></li>
+    <li><button><i data-lucide="database"></i>Sources</button></li>
+    <li><button><i data-lucide="users"></i>Experts</button></li>
+    <li><button><i data-lucide="clipboard-check"></i>Reviews</button></li>
+    <li><button><i data-lucide="bar-chart-3"></i>Reports</button></li>
+    <li><button><i data-lucide="settings"></i>Settings</button></li>
+  </ul>
+  <button><i data-lucide="log-out"></i>Sign out</button>
+  </nav>
+
+  <main>
+
+  <nav aria-label="Breadcrumb">
+    <ol>
+      <li><a href="#">Workspace</a></li>
+      <li><a href="#">Client Reviews</a></li>
+      <li>Q3 Matters</li>
+    </ol>
+  </nav>
+
+  <div>
+    <div>
+      <h1>Client Review Workspace</h1>
+      <p>Track intake, review AI-drafted findings, and manage sourced answers before they reach the client.</p>
+    </div>
+    <button>New review <i data-lucide="arrow-right"></i></button>
+  </div>
+
+  <ul>
+    <li>
+      <p>Open matters</p>
+      <p>24</p>
+      <p><span>+4</span> vs. last month</p>
+    </li>
+    <li>
+      <p>Avg. review time</p>
+      <p>1.8d</p>
+      <p><span>-12%</span> vs. last quarter</p>
+    </li>
+    <li>
+      <p>Sourced accuracy</p>
+      <p>99.1%</p>
+      <p><span>+0.3%</span> trailing 90 days</p>
+    </li>
+    <li>
+      <p>Expert hours saved</p>
+      <p>312</p>
+      <p><span>+58</span> this quarter</p>
+    </li>
+  </ul>
+
+  <section>
+    <h2>Filter reviews</h2>
+    <form>
+      <label>Client name
+        <input type="text" placeholder="e.g. Marrow Capital">
+      </label>
+      <label>Practice area
+        <select>
+          <option value="">Choose one</option>
+          <option>Legal</option>
+          <option>Finance</option>
+          <option>Clinical</option>
+          <option>Advisory</option>
+          <option>Tax</option>
+        </select>
+      </label>
+      <label>Status
+        <select>
+          <option value="">All statuses</option>
+          <option>Needs review</option>
+          <option>In progress</option>
+          <option>Sourced</option>
+          <option>Approved</option>
+          <option>Sent to client</option>
+        </select>
+      </label>
+      <label>Date from
+        <input type="date">
+      </label>
+      <button type="submit">Apply filters</button>
+      <button type="reset">Reset</button>
+    </form>
+  </section>
+
+  <section>
+    <div>
+      <h2>Recent reviews</h2>
+      <span>32 total</span>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Matter</th>
+          <th>Practice area</th>
+          <th>Reviewer</th>
+          <th>Status</th>
+          <th>Updated</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Hollis Trust — Q3 estate review</td>
+          <td>Legal</td>
+          <td>J. Alvarez</td>
+          <td>Needs review</td>
+          <td>2h ago</td>
+        </tr>
+        <tr>
+          <td>Marrow Capital — Diligence memo</td>
+          <td>Finance</td>
+          <td>K. Chen</td>
+          <td>In progress</td>
+          <td>4h ago</td>
+        </tr>
+        <tr>
+          <td>Vasquez Family Office — Tax position</td>
+          <td>Tax</td>
+          <td>R. Osei</td>
+          <td>Sourced</td>
+          <td>6h ago</td>
+        </tr>
+        <tr>
+          <td>Brightpath Clinical — Protocol review</td>
+          <td>Clinical</td>
+          <td>M. Fields</td>
+          <td>Approved</td>
+          <td>1d ago</td>
+        </tr>
+        <tr>
+          <td>Denholm &amp; Co — Advisory brief</td>
+          <td>Advisory</td>
+          <td>S. Novak</td>
+          <td>Sent to client</td>
+          <td>1d ago</td>
+        </tr>
+        <tr>
+          <td>Aster Holdings — Restructuring memo</td>
+          <td>Finance</td>
+          <td>K. Chen</td>
+          <td>Needs review</td>
+          <td>2d ago</td>
+        </tr>
+        <tr>
+          <td>Perry Estate — Probate summary</td>
+          <td>Legal</td>
+          <td>J. Alvarez</td>
+          <td>In progress</td>
+          <td>2d ago</td>
+        </tr>
+        <tr>
+          <td>Solano Group — Compliance check</td>
+          <td>Advisory</td>
+          <td>S. Novak</td>
+          <td>Approved</td>
+          <td>3d ago</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Log a new intake</h2>
+    <p>Add a matter so Altrus can start sourcing and drafting a reviewable answer.</p>
+    <form>
+      <label>Matter name
+        <input type="text" placeholder="e.g. Hollis Trust — Q3 estate review" required>
+      </label>
+      <label>Practice area
+        <select>
+          <option value="">Choose one</option>
+          <option>Legal</option>
+          <option>Finance</option>
+          <option>Clinical</option>
+          <option>Advisory</option>
+          <option>Tax</option>
+        </select>
+      </label>
+      <label>Assigned reviewer
+        <input type="text" placeholder="e.g. J. Alvarez">
+      </label>
+      <label>Due date
+        <input type="date">
+      </label>
+      <label>Context for the reviewer
+        <textarea rows="4" placeholder="What should Altrus prioritize when sourcing this answer?"></textarea>
+      </label>
+      <button type="submit">Create matter</button>
+      <button type="button">Save as draft</button>
+    </form>
+  </section>
+
+  </main>
+  </div>
+
+  <footer>
+  <div>
+  <span>Ab</span>
+  <span>© 2026 Workspace Inc.</span>
+  </div>
+  <nav>
+  <a href="#">Privacy</a>
+  <a href="#">Terms</a>
+  <a href="#">Support</a>
+  </nav>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
+ 
